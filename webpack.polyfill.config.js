@@ -1,14 +1,14 @@
-const path = require('path');
 const webpack = require('webpack');
 
 module.exports = {
   entry: {
-    vendor: ['react', 'react-dom']
+    polyfill: [
+      'babel-polyfill'
+    ]
   },
   output: {
     path: `${__dirname}/public`,
-    filename: '[name].bundle.js',
-    library: 'dll_[name]'
+    filename: '[name].bundle.js'
   },
   module: {
     loaders: [
@@ -20,9 +20,9 @@ module.exports = {
     ]
   },
   plugins: [
-    new webpack.DllPlugin({
-      path: path.join(__dirname, 'dll', '[name]-manifest.json'),
-      name: 'dll_[name]'
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'polyfill',
+      minChunks: Infinity,
     })
   ]
 };

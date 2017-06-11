@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --config webpack.app.config.js --progress --inline --host 0.0.0.0",
-    "build": "webpack --config webpack.dll.config.js && webpack --config webpack.app.config.js",
+    "build": "webpack --config webpack.polyfill.config.js && webpack --config webpack.dll.config.js && webpack --config webpack.app.config.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
