@@ -3,7 +3,6 @@ const webpack = require('webpack');
 module.exports = {
   entry: {
     index: [
-      'babel-polyfill',
       './src/index.jsx'
     ]
   },
@@ -22,25 +21,20 @@ module.exports = {
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,
-        loader: 'babel-loader',
-        query: {
-          presets: [
-            ['env', {
-              targets: {
-                browsers: ['last 2 versions']
-              },
-              useBuiltIns: true,
-              debug: true
-            }],
-            'react'
-          ],
-          plugins: [
-            'transform-react-jsx'
-          ]
-        }
+        loader: 'babel-loader'
       }
     ]
   },
+  plugins: [
+    new webpack.DllReferencePlugin({
+      context: __dirname,
+      manifest: require('./dll/polyfill-manifest.json')
+    }),
+    new webpack.DllReferencePlugin({
+      context: __dirname,
+      manifest: require('./dll/vendor-manifest.json')
+    })
+  ],
   resolve: {
     extensions: ['.js', '.jsx']
   }
